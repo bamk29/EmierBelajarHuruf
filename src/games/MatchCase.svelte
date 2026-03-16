@@ -92,8 +92,9 @@
             if (matchedCount === targetCount) {
                 speakPraise();
                 setTimeout(() => {
-                    isLevelDone = true;
-                }, 1500);
+                    // Infinite Mode: Main lagi dengan huruf yang diacak ulang
+                    initGame();
+                }, 2000);
             }
         } else {
             playSfx("bloop");

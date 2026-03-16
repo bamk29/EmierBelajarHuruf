@@ -105,18 +105,17 @@
 
     function checkComplete() {
         if (slots.every((s) => s.filled)) {
-            isComplete = true;
-
             // Tambah koin secara reaktif
             if (appState.child) {
                 appState.child.coins += 3;
-                db.collection("children")
-                    .doc("profile_1")
-                    .set(appState.child)
-                    .catch(console.error);
             }
 
             speakPraise();
+
+            // Auto-advance setelah 2.5 detik
+            setTimeout(() => {
+                handleNext();
+            }, 2500);
         }
     }
 
@@ -124,15 +123,16 @@
         const currentHash = window.location.hash;
         if (currentHash.includes("/word-builder")) {
             playSfx("pop");
-            // Cari index huruf sekarang
-            const currentIndex = letters.findIndex(
-                (l) => l.letter === currentLetter,
-            );
-            // Ambil huruf berikutnya (berurutan A-Z lalu ulang) agar semua kata muncul
-            const nextIndex = (currentIndex + 1) % letters.length;
-            currentLetter = letters[nextIndex].letter;
-
-            isComplete = false;
+            // Pilih huruf acak selain yang sekarang agar variatif
+            let nextChar = currentLetter;
+            if (letters.length > 1) {
+                while (nextChar === currentLetter) {
+                    nextChar =
+                        letters[Math.floor(Math.random() * letters.length)]
+                            .letter;
+                }
+            }
+            currentLetter = nextChar;
             initGame();
             return;
         }
@@ -196,23 +196,7 @@
         </div>
     {/if}
 
-    {#if isComplete}
-        <div class="overlay-done flex-col flex-center pop-in">
-            <div class="card-done flex-col flex-center">
-                <div style="font-size: 100px; margin-bottom: 20px;">{icon}</div>
-                <h2>Hebat! Kata {word} Selesai! ✨</h2>
-                <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
-                <div class="flex-row gap-sm" style="margin-top:20px;">
-                    <button class="btn btn-secondary" onclick={initGame}
-                        >🔁 Ulangi</button
-                    >
-                    <button class="btn btn-primary" onclick={handleNext}
-                        >Lanjut 👉</button
-                    >
-                </div>
-            </div>
-        </div>
-    {/if}
+    <!-- Overlay done dihapus agar game flow infinite -->
 </div>
 
 <style>

@@ -81,19 +81,15 @@
             opt.selected = true;
             speakPraise();
 
-            if (
-                currentRound < totalRounds &&
-                letterData?.words?.length >= totalRounds
-            ) {
-                setTimeout(() => {
+            // Infinite Mode: Selalu lanjut ke ronde berikutnya, reset kalau sudah habis koleksi kata
+            setTimeout(() => {
+                if (currentRound >= letterData?.words?.length) {
+                    currentRound = 1; // Mulai lagi dari kata pertama huruf ini
+                } else {
                     currentRound++;
-                    initGame();
-                }, 2000);
-            } else {
-                setTimeout(() => {
-                    isLevelDone = true;
-                }, 1500);
-            }
+                }
+                initGame();
+            }, 2000);
         } else {
             playSfx("bloop");
             opt.wrong = true;
@@ -152,25 +148,7 @@
         {/each}
     </div>
 
-    {#if isLevelDone}
-        <div
-            class="overlay-done flex-col flex-center slide-down"
-            style="z-index: 50;"
-        >
-            <div class="card-done flex-col flex-center">
-                <h2>Mata Elang! 🦅</h2>
-                <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
-                <div class="flex-row gap-sm" style="margin-top:20px;">
-                    <button class="btn btn-secondary" onclick={handleRetry}
-                        >🔁 Ulangi</button
-                    >
-                    <button class="btn btn-primary" onclick={handleNext}
-                        >Lanjut 👉</button
-                    >
-                </div>
-            </div>
-        </div>
-    {/if}
+    <!-- Overlay done dihapus agar game flow infinite -->
 </div>
 
 <style>

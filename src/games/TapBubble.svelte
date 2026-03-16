@@ -128,12 +128,10 @@
                 clearInterval(gameInterval);
                 speakPraise();
 
-                if (currentRound < maxRounds) {
-                    overlayType = "round";
-                } else {
-                    speak("Wah, semua balon selesai!");
-                    overlayType = "game";
-                }
+                // Infinite: Naikkan ronde secara otomatis tanpa overlay yang memutus game
+                setTimeout(() => {
+                    handleNextRound();
+                }, 2000);
             }
         } else {
             // Salah

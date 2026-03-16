@@ -130,16 +130,16 @@
 
     function checkComplete() {
         if (syllables.every((s) => s.matched)) {
+            // Reward koin
+            if (appState.child) {
+                appState.child.coins += 5;
+            }
+            speak(`Luar biasa! Kata ini selesai!`);
             setTimeout(() => {
-                isComplete = true;
-                if (appState.child) {
-                    appState.child.coins += 5; // Reward lebih besar karena lebih susah
-                }
-                speak(
-                    `Luar biasa! Kamu berhasil menyusun kata: ${wordData.word}`,
-                );
-                setTimeout(() => speakPraise(), 2000);
-            }, 500);
+                speakPraise();
+                // Auto-advance ke kata berikut secara acak
+                initGame();
+            }, 2500);
         }
     }
 </script>
