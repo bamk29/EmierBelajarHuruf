@@ -128,6 +128,14 @@
                 clearInterval(gameInterval);
                 speakPraise();
 
+                const isLessonMode = window.location.hash.includes("/lesson");
+                if (isLessonMode && currentRound >= maxRounds) {
+                    setTimeout(() => {
+                        onComplete(3);
+                    }, 2000);
+                    return;
+                }
+
                 // Infinite: Naikkan ronde secara otomatis tanpa overlay yang memutus game
                 setTimeout(() => {
                     handleNextRound();

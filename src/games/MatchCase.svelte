@@ -91,6 +91,15 @@
 
             if (matchedCount === targetCount) {
                 speakPraise();
+
+                const isLessonMode = window.location.hash.includes("/lesson");
+                if (isLessonMode) {
+                    setTimeout(() => {
+                        onComplete(3);
+                    }, 1500);
+                    return;
+                }
+
                 setTimeout(() => {
                     // Infinite Mode: Main lagi dengan huruf yang diacak ulang
                     initGame();

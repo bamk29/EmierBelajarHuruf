@@ -8,14 +8,12 @@
     let canvas;
     let ctx;
     let isDrawing = $state(false);
-    let fillPercentage = $state(0);
-    let currentRound = $state(1); // 1 = Upper, 2 = Lower (Asumsikan di-update di checkCompletion)
+    let currentRound = $state(1); // 1 = Upper, 2 = Lower
     let isDone = $state(false);
-    let showOverlay = $state(false);
 
     // Ukuran kuas dan warna
-    const brushSize = 60; // Dipertebal sesuai request (seukuran jari anak)
-    const brushColor = "#FFCA28"; // Kuning emas
+    const brushSize = 35; // Perkecil sedikit sesuai request
+    const brushColor = "#FFCA28";
 
     onMount(() => {
         setupCanvas();
@@ -23,8 +21,9 @@
 
     function setupCanvas() {
         ctx = canvas.getContext("2d");
-        canvas.width = 300;
-        canvas.height = 300;
+        // Perbesar canvas sesuai request
+        canvas.width = 450;
+        canvas.height = 500;
         drawGuideLetter();
     }
 
@@ -35,23 +34,21 @@
                 : targetLetter.toLowerCase();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Shadow/Template abu-abu di latar
-        ctx.font = `bold ${currentRound === 1 ? "280px" : "240px"} Arial, sans-serif`;
-        ctx.fillStyle = "#CCCCCC";
+        // Shadow/Template besar di latar
+        ctx.font = `bold ${currentRound === 1 ? "420px" : "380px"} Arial, sans-serif`;
+        ctx.fillStyle = "#F0F0F0";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.fillText(char, 150, 160);
+        ctx.fillText(char, canvas.width / 2, canvas.height / 2 + 20);
 
-        // Garis tepi/outline tipis sebagai panduan tambahan
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "#AAAAAA";
-        ctx.strokeText(char, 150, 160);
+        // Garis tepi tipis
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = "#DDDDDD";
+        ctx.strokeText(char, canvas.width / 2, canvas.height / 2 + 20);
     }
 
     function resetGame() {
-        fillPercentage = 0;
         isDone = false;
-        showOverlay = false;
         drawGuideLetter();
     }
 
@@ -66,7 +63,6 @@
         if (e && e.cancelable) e.preventDefault();
         isDrawing = false;
         ctx.beginPath();
-        checkCompletion();
     }
 
     function draw(e) {
@@ -91,30 +87,10 @@
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(x, y);
-
-        // Kasar estimasi (Tiap drag naikkan percentage)
-        fillPercentage += 0.5;
-
-        // Animasi suara gesek (opsional) mending tidak usah biar ga spam
     }
 
     function checkCompletion() {
-        if (fillPercentage > 100) {
-            isDone = true;
-            playSfx("coin");
-            speakPraise();
-
-            if (currentRound === 1) {
-                setTimeout(() => {
-                    currentRound = 2;
-                    resetGame();
-                }, 2000);
-            } else {
-                setTimeout(() => {
-                    showOverlay = true;
-                }, 2000);
-            }
-        }
+        // Sensor dihapus sesuai request
     }
 
     function handleNext() {
@@ -142,11 +118,17 @@
             ontouchstart={startDraw}
             ontouchend={stopDraw}
             ontouchmove={draw}
+            style="width: 100%; height: auto; max-width: 450px;"
         ></canvas>
+    </div>
 
-        {#if isDone}
-            <div class="success-sparks">✨</div>
-        {/if}
+    <div class="controls-row flex-row gap-md mt-lg">
+        <button class="btn btn-secondary btn-lg" onclick={resetGame}>
+            🗑️ Hapus
+        </button>
+        <button class="btn btn-primary btn-lg" onclick={handleNext}>
+            Lanjut 👉
+        </button>
     </div>
 
     <div class="progress-bar-bg mt-md">
@@ -229,16 +211,6 @@
         height: 100%;
         background: #ffca28;
         transition: width 0.1s linear;
-    }
-
-    .success-sparks {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 150px;
-        pointer-events: none;
-        animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     @keyframes popIn {

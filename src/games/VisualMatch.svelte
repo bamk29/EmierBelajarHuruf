@@ -81,10 +81,20 @@
             opt.selected = true;
             speakPraise();
 
-            // Infinite Mode: Selalu lanjut ke ronde berikutnya, reset kalau sudah habis koleksi kata
+            // Tentukan apakah dalam mode Lesson atau Standalone
+            const isLessonMode = window.location.hash.includes("/lesson");
+
+            if (isLessonMode && currentRound >= totalRounds) {
+                setTimeout(() => {
+                    onComplete(3);
+                }, 1500);
+                return;
+            }
+
+            // Infinite Mode (jika di luar lesson)
             setTimeout(() => {
-                if (currentRound >= letterData?.words?.length) {
-                    currentRound = 1; // Mulai lagi dari kata pertama huruf ini
+                if (currentRound >= (letterData?.words?.length || 3)) {
+                    currentRound = 1;
                 } else {
                     currentRound++;
                 }
@@ -231,27 +241,6 @@
     .hinted {
         box-shadow: 0 0 15px #ffca28;
         border-color: #ffca28;
-    }
-
-    .overlay-done {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-    }
-
-    .card-done {
-        background: white;
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        text-align: center;
-    }
-    .card-done h2 {
-        color: #e65100;
-        margin-bottom: 5px;
     }
 
     @keyframes shake {

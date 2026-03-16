@@ -135,6 +135,15 @@
                 appState.child.coins += 5;
             }
             speak(`Luar biasa! Kata ini selesai!`);
+
+            const isLessonMode = window.location.hash.includes("/lesson");
+            if (isLessonMode) {
+                setTimeout(() => {
+                    onComplete(3);
+                }, 2500);
+                return;
+            }
+
             setTimeout(() => {
                 speakPraise();
                 // Auto-advance ke kata berikut secara acak

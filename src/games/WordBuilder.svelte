@@ -327,50 +327,6 @@
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
     }
 
-    .overlay-done {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(251, 192, 45, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 11000;
-    }
-
-    .card-done {
-        background: white;
-        padding: 50px;
-        border-radius: 30px;
-        text-align: center;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn {
-        padding: 15px 30px;
-        font-size: 20px;
-        border-radius: 15px;
-        cursor: pointer;
-        border: none;
-        font-weight: bold;
-        transition: transform 0.2s;
-    }
-
-    .btn:active {
-        transform: scale(0.95);
-    }
-
-    .btn-primary {
-        background: #fbc02d;
-        color: white;
-    }
-    .btn-secondary {
-        background: #fff9c4;
-        color: #fbc02d;
-    }
-
     .pop-in {
         animation: pop 0.5s ease-out;
     }
