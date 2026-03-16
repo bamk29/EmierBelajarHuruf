@@ -6,8 +6,8 @@
     import { appState } from "../lib/state.svelte.js";
     import { letters } from "../data/letters.js";
 
-    let { targetLetter = "a", onComplete = () => {} } = $props();
-    let currentLetter = $state(targetLetter);
+    let { targetLetter = $bindable("a"), onComplete = () => {} } = $props();
+    let currentLetter = $state("a");
 
     let word = $state("");
     let icon = $state("");
