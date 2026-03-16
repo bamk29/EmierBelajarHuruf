@@ -77,11 +77,13 @@
             if (found) return;
 
             const rect = slotEl.getBoundingClientRect();
+            // Gunakan margin 40px seperti di kereta agar lebih responsif
+            const margin = 40;
             const isInside =
-                dragPos.x > rect.left - 15 &&
-                dragPos.x < rect.right + 15 &&
-                dragPos.y > rect.top - 15 &&
-                dragPos.y < rect.bottom + 15;
+                dragPos.x > rect.left - margin &&
+                dragPos.x < rect.right + margin &&
+                dragPos.y > rect.top - margin &&
+                dragPos.y < rect.bottom + margin;
 
             if (isInside) {
                 const index = parseInt(slotEl.getAttribute("data-index"));
@@ -120,18 +122,16 @@
 
     function handleNext() {
         const currentHash = window.location.hash;
-        // Jika di mode standalone kita ganti ke huruf acak lain dari A-Z
         if (currentHash.includes("/word-builder")) {
             playSfx("pop");
-            let nextChar = currentLetter;
-            if (letters.length > 1) {
-                while (nextChar === currentLetter) {
-                    nextChar =
-                        letters[Math.floor(Math.random() * letters.length)]
-                            .letter;
-                }
-            }
-            currentLetter = nextChar;
+            // Cari index huruf sekarang
+            const currentIndex = letters.findIndex(
+                (l) => l.letter === currentLetter,
+            );
+            // Ambil huruf berikutnya (berurutan A-Z lalu ulang) agar semua kata muncul
+            const nextIndex = (currentIndex + 1) % letters.length;
+            currentLetter = letters[nextIndex].letter;
+
             isComplete = false;
             initGame();
             return;
