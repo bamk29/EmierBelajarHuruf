@@ -40,12 +40,7 @@
     }
 
     function nextRound() {
-        if (score >= 5) {
-            isPlaying = false;
-            playSfx("coin");
-            speakPraise();
-            return;
-        }
+        // Hapus batasan score >= 5 agar game terus berjalan (Infinite Mode)
 
         // Pilih 1 huruf target acak dari daftar A-Z
         const targetData = letters[Math.floor(Math.random() * letters.length)];
@@ -124,11 +119,20 @@
     function drop(e) {
         if (!draggedItem) return;
 
-        const winHeight = window.innerHeight;
-        const pointerY = dragPos.y;
+        // Area Drop Dinamis: Cek apakah pointer berada di area gerobak kereta
+        const cartEl = document.querySelector(".cart");
+        let isInsideDropzone = false;
 
-        // Area Drop: 45% atas layar
-        const isInsideDropzone = pointerY < winHeight * 0.45;
+        if (cartEl) {
+            const rect = cartEl.getBoundingClientRect();
+            // Berikan margin ekstra (40px) agar lebih mudah untuk jari anak
+            const margin = 40;
+            isInsideDropzone =
+                dragPos.x > rect.left - margin &&
+                dragPos.x < rect.right + margin &&
+                dragPos.y > rect.top - margin &&
+                dragPos.y < rect.bottom + margin;
+        }
 
         if (isInsideDropzone) {
             if (draggedItem.id === cartTargetId) {
@@ -136,12 +140,12 @@
                 cancelAnimationFrame(animationFrame);
                 draggedItem.hidden = true;
                 score += 1;
-                if (difficulty < 5) difficulty += 0.5;
+                if (difficulty < 8) difficulty += 0.3; // Limit speed slightly higher but slower increment
 
                 setTimeout(() => {
                     draggedItem = null;
                     nextRound();
-                }, 1000);
+                }, 800);
             } else {
                 playSfx("bloop");
                 draggedItem.wrong = true;
@@ -172,7 +176,7 @@
             >❌ Keluar</button
         >
         <div class="score-display">
-            🎖️ Kecepatan Lv. {Math.floor(difficulty)} | Skor: {score}/5
+            🎖️ Kecepatan: {Math.floor(difficulty)} | Skor: {score}
         </div>
     </header>
 
