@@ -1,0 +1,69 @@
+:root {
+  /* ================================== */
+  /* 🏷️ THEME COLORS - LANGKAH KECIL  */
+  /* ================================== */
+  
+  /* Primary - Warna Aksi & Brand Utama (Cerahi, Ceria) */
+  --color-primary: #FF7043;
+  --color-primary-light: #FF9E80;
+  --color-primary-dark: #F4511E;
+
+  /* Secondary - Aksen (Harmonis dengan Primary) */
+  --color-secondary: #00BCD4;
+  --color-secondary-light: #84FFFF;
+  --color-secondary-dark: #0097A7;
+
+  /* Accent - Untuk Bintang, Poin, Ikan Emas */
+  --color-accent: #FFCA28;
+  
+  /* Status Colors */
+  --color-success: #66BB6A;   /* Hijau ceria untuk jawaban benar */
+  --color-warning: #FFA726;   /* Oranye untuk hint/peringatan */
+  --color-error: #EF5350;     /* Merah terang */
+
+  /* Neutral Colors */
+  --color-bg: #FFF9F3;        /* Krem sangat lembut untuk mata anak */
+  --color-card: #FFFFFF;
+  --color-text-main: #3E2723; /* Cokelat gelap (bukan hitam, lebih lembut) */
+  --color-text-muted: #8D6E63;
+  
+  /* ================================== */
+  /* 🔤 TYPOGRAPHY                    */
+  /* ================================== */
+  /* Menggunakan font sistem modern yang membulat (rounded) agar ramah anak */
+  --font-family-main: 'Nunito', 'Quicksand', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Fredoka One', 'Baloo 2', system-ui, -apple-system, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3rem;
+
+  /* ================================== */
+  /* 📐 SPACING & SIZING               */
+  /* ================================== */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* ================================== */
+  /* 🎨 BORDERS & SHADOWS              */
+  /* ================================== */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 9999px;
+
+  /* Shadow lembut ala mobile game anak */
+  --shadow-sm: 0 2px 4px rgba(62, 39, 35, 0.05);
+  --shadow-md: 0 4px 8px rgba(62, 39, 35, 0.1);
+  --shadow-float: 0 10px 20px rgba(62, 39, 35, 0.15);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}

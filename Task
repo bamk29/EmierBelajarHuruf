@@ -1,0 +1,51 @@
+# 🎯 Task Manager: Langkah Kecil (Fase Pembangunan & Phase Debugging Terpisah)
+
+Sistem pengerjaan ini dibagi menjadi dua fase utama: **FASE PEMBANGUNAN (BUILD)** untuk semua fitur, dilanjutkan dengan **FASE DEBUGGING** di akhir untuk memastikan aplikasi berjalan sempurna tanpa bug.
+
+---
+
+## 🛠️ FASE PEMBANGUNAN (BUILD)
+
+### Phase 1: Setup Fondasi (Svelte 5 + PWA + DB)
+- [ ] **Task 1.1**: Inisiasi Svelte 5 (Vite), tambah `vite-plugin-pwa`, `svelte-spa-router`, dan `localbase`.
+- [ ] **Task 1.2**: Setup CSS Design System (Warna, Font, Utilities).
+- [ ] **Task 1.3**: Inisialisasi Database (`db.js` / LocalBase) untuk User, Progress, Settings.
+
+### Phase 2: Identitas & Splash Screen
+- [ ] **Task 2.1**: Buat Halaman Splash Screen & Gerbang Masuk.
+- [ ] **Task 2.2**: Form Registrasi Awal (Nama Anak & Nama Kucing Kustom).
+
+### Phase 3: Setup Audio & TTS Engine
+- [ ] **Task 3.1**: Buat utilitas Audio Manager (BGM, SFX).
+- [ ] **Task 3.2**: Setup Google TTS Web Speech API Wrapper.
+
+### Phase 4: Core Map & Navigation
+- [ ] **Task 4.1**: Halaman Peta Petualangan (Rimba Bunyi).
+
+### Phase 5: Gameplay - Metode CPA (Concrete-Pictorial-Abstract)
+- [ ] **Task 5.1**: Logic CPA Flow Foundation (UI Layout).
+- [ ] **Task 5.2**: Mini-game Kuis Letup Balon (Abstract).
+- [ ] **Task 5.3**: Sistem "Auto-Remedial" Lembut.
+
+### Phase 6: Reward & Habit Loop
+- [ ] **Task 6.1**: Sistem Reward (Dapat ikan emas & Bintang).
+- [ ] **Task 6.2**: Halaman Rumah Kucing (Beri Makan).
+
+### Phase 7: Parent Hub
+- [ ] **Task 7.1**: Halaman Orang Tua (PIN Protected).
+- [ ] **Task 7.2**: Laporan Heatmap Alfabet (Huruf dikuasai).
+
+---
+
+## 🔍 FASE DEBUGGING (VERIFICATION)
+
+Setelah FASE PEMBANGUNAN selesai (Semua Task 1.1 - 7.2 tercentang), Agen AI akan melakukan eksekusi Debugging secara berurutan:
+
+- [ ] **Debug Phase 1**: Pastikan build Vite sukses, PWA generate manifest, LocalBase read/write lancar.
+- [ ] **Debug Phase 2**: Animasi transisi router dan logic auto-login.
+- [ ] **Debug Phase 3**: Audio SFX dan TTS Web Speech API berfungsi.
+- [ ] **Debug Phase 4**: Peta petualangan sinkron dengan progress di database.
+- [ ] **Debug Phase 5**: Flow CPA dari awal hingga akhir, mini-game responsif dan score tercatat.
+- [ ] **Debug Phase 6**: Logic koin Ikan Emas berkurang saat memberi makan kucing.
+- [ ] **Debug Phase 7**: Auth PIN Parent Hub aman, grafik heatmap me-render data statik/dinamis.
+- [ ] **Final Polish**: Audit Lighthouse (PWA) & Simulate Offline Network (Zero Error Console).

@@ -1,0 +1,152 @@
+/* Impor Font dari Google Fonts untuk tampilan lebih ramah anak */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* Reset Basis */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    /* Hilangkan blue highlight di mobile */
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    font-family: var(--font-family-main);
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+    /* Menerapkan Mobile First */
+    touch-action: pan-y;
+    /* Mencegah zoom tidak sengaja saat touch berlebih */
+    user-select: none;
+    /* Mencegah anak men-select teks tidak sengaja */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+}
+
+/* ================================== */
+/* 🛠️ UTILITY CLASSES                 */
+/* ================================== */
+
+/* Layout & Flexbox */
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.gap-sm {
+    gap: var(--space-sm);
+}
+
+.gap-md {
+    gap: var(--space-md);
+}
+
+.gap-lg {
+    gap: var(--space-lg);
+}
+
+/* Typography */
+.text-center {
+    text-align: center;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+.text-primary {
+    color: var(--color-primary);
+}
+
+.text-secondary {
+    color: var(--color-secondary);
+}
+
+/* Buttons & Interactives (Bentuk membulat ramah anak) */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-sm) var(--space-lg);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    font-size: var(--text-lg);
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+    /* Efek tombol 3D tebal */
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+    /* Tombol tertekan ke bawah */
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 0 var(--color-primary-dark);
+}
+
+.btn-secondary {
+    background-color: var(--color-secondary);
+    color: white;
+    box-shadow: 0 4px 0 var(--color-secondary-dark);
+}
+
+/* Cards (Untuk menu atau profil) */
+.card {
+    background-color: var(--color-card);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-md);
+}
+
+/* Page Container - Mobile First view */
+.app-container {
+    width: 100%;
+    max-width: 480px;
+    /* Lebar maksimal menyerupai tablet kecil / mobile vertikal */
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    background-color: var(--color-bg);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+    /* Bayangan jika di mode desktop */
+    overflow: hidden;
+    /* Penting untuk game/animasi slide */
+}

@@ -1,0 +1,63 @@
+# 🚀 Blueprint: Langkah Kecil (Petualangan Huruf) v5
+
+> Target: **Mobile First, PWA (100% Offline)**
+> Engine: **Svelte 5** + Vite + LocalBase
+> Maskot: **Kucing Kesayangan** (Nama bisa di-custom)
+
+---
+
+## 💖 1. Optimasi Fitur Belajar (Sudut Pandang Anak & Orang Tua)
+
+Sebagai orang tua dan membidik psikologi anak usia 4-6 tahun, agar mereka **cepat bisa membaca tanpa merasa dipaksa belajar**, kita tambahkan 4 Pilar Empati ini:
+
+### A. Personalisasi Super (The "My Pet" Effect)
+*   **Maskot Kucing Custom**: Anak tidak sekadar bermain, tapi "mengasuh" kucing peliharaannya. Nama kucing diinput saat pertama kali main.
+*   **Audio TTS Menyebut Nama**: Google TTS bisa memanggil nama anak dan nama kucingnya. *"Wah, [Nama Anak] hebat! Milo senang sekali dapat bintang!"* (Membuat ikatan emosional).
+
+### B. Daily Habit Loop ("Kasih Makan Kucing")
+*   **Motivasi Harian**: Setiap menyelesaikan 1 sesi belajar (10-15 menit), anak tidak hanya dapat bintang/stiker, tapi juga mendapat "Ikan Emas" untuk memberi makan kucingnya.
+*   **Efek**: Anak akan minta sendiri untuk buka aplikasi setiap hari karena ingat peliharaannya. (Konsistensi Kumon tercapai secara organik).
+
+### C. Auto-Remedial Lembut (Tanpa Kata "Salah")
+*   **Deteksi Frustrasi**: Jika anak salah 3 kali berturut-turut memilih huruf, layar tidak keluar tanda silang merah. Kucing akan muncul memberi *hint* super jelas.
+*   **Algoritma Pengulangan**: Huruf yang sulit diingat anak akan otomatis diselipkan lebih sering di mini-game berikutnya (Spaced Repetition) tanpa disadari.
+
+### D. "Magic Mirror" untuk Pengecapan (Voice Input Sederhana)
+*   **Membaca Nyaring (Tahap Coba-coba)**: Setelah anak menyusun suku kata (BA-JU), ada tombol *Mic*. Kucing meminta percobaan baca. Kucing melompat kegirangan saat ada suara masuk.
+
+---
+
+## 🛠️ 2. Arsitektur Menu (Flowchart Dasar)
+
+| Area | Sub-Menu | Fungsi Utama |
+|---|---|---|
+| **Splash Screen** | Animasi Kucing Tidur | Loading Svelte 5 & inisialisasi TTS. |
+| **Gerbang Masuk** | "Mulai Main" vs "Ruang Ayah Bunda" | Pemisahan akses (Anak langsung main, Ortu via PIN). |
+| **Play Zone (Anak)** | Peta Petualangan | Jalur progres linier (Kumon Style). Mulai dari Rimba Bunyi. |
+| **Rumah Kucing** | Makanan & Stiker | Beri makan kucing pakai koin hasil belajar, tempel stiker. |
+| **Parent Hub (OT)** | Laporan Tumbang | Cek huruf apa yang belum dikuasai (Heatmap Alfabet). |
+
+---
+
+## 🧩 3. Detail Konten & Mekanik Game (Metode CPA)
+
+**Contoh: Level Pengenalan Huruf "B"**
+
+*   **Tahap Concrete (Nyata)**
+    *   *Visual*: Gambar **Bola** yang dipantulkan oleh si Kucing.
+    *   *TTS*: "Ini Bola. B-B-Bola. Coba ketuk bolanya, [Nama Anak]!"
+*   **Tahap Pictorial (Gambar)**
+    *   *Visual*: Bola perlahan mengempis, membentuk garis tegak & perut buncit (huruf b).
+    *   *TTS*: "Lihat! Bolanya berubah jadi huruf B. Perutnya gendut di bawah seperti bola ya!"
+*   **Tahap Abstract (Simbol/Kuis)**
+    *   *Visual*: Balon-balon berisi huruf B, D, dan P.
+    *   *Mekanik*: Letuskan balon huruf B.
+    *   *Remedial Lembut*: Jika pencet 'D', balon hanya mental (tidak pecah) & TTS bilang *"Hampir! Cari yang perutnya di KANAN ya."*
+
+---
+
+## 🎤 4. Library Pujian (Script TTS Google)
+
+1.  **Pujian Instan** (Suara Ibu TTS): *"Keren banget [Nama Anak]!"*, *"[Nama Kucing] pasti bangga sama kamu!"*
+2.  **Encouragement** (Sedikit Salah): *"Hampir! Ayo coba yang sebelahnya."*
+3.  **Penguatan Diri**: Anak diajak tos ke layar saat dapat 3 bintang.
