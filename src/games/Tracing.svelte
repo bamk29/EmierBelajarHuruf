@@ -139,11 +139,8 @@
     </div>
 
     {#if showOverlay}
-        <div
-            class="overlay-done flex-col flex-center slide-down"
-            style="z-index: 50;"
-        >
-            <div class="card-done flex-col flex-center">
+        <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
+            <div class="card-done flex-col flex-center slide-down">
                 <h2>Penulis Hebat! 📝</h2>
                 <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
                 <div class="flex-row gap-sm" style="margin-top:20px;">
@@ -225,6 +222,20 @@
         100% {
             transform: translate(-50%, -50%) scale(1) rotate(0deg);
             opacity: 0;
+        }
+    }
+
+    .slide-down {
+        animation: slideDown 0.5s ease-out;
+    }
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
         }
     }
 

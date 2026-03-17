@@ -133,14 +133,14 @@
                 if (isLessonMode && currentRound >= maxRounds) {
                     setTimeout(() => {
                         overlayType = "game";
-                    }, 2000);
+                    }, 1000);
                     return;
                 }
 
                 if (isLessonMode) {
                     setTimeout(() => {
                         overlayType = "round";
-                    }, 2000);
+                    }, 1000);
                     return;
                 }
 
@@ -219,11 +219,8 @@
 
     {#if overlayType !== "none"}
         <!-- Overlay Tombol Lanjut/Ulangi -->
-        <div
-            class="overlay-done flex-col flex-center slide-down"
-            style="z-index: 50;"
-        >
-            <div class="card-done flex-col flex-center">
+        <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
+            <div class="card-done flex-col flex-center slide-down">
                 {#if overlayType === "fail"}
                     <h2 style="color: #E91E63;">Yah, Terlewat! 😢</h2>
                     <p style="font-size: 20px;">
@@ -279,11 +276,11 @@
     }
     @keyframes slideDown {
         from {
-            top: 70px;
+            transform: translateY(-50px);
             opacity: 0;
         }
         to {
-            top: 100px;
+            transform: translateY(0);
             opacity: 1;
         }
     }

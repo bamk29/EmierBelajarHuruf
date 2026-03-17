@@ -213,7 +213,8 @@
             {/each}
         </div>
     {:else}
-        <div class="finish-screen flex-col flex-center pop-in">
+        <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
+            <div class="finish-screen flex-col flex-center slide-down">
             <div class="reward-icon">{wordData.icon}</div>
             <h1 class="success-text">{wordData.word.toUpperCase()}!</h1>
             <p>Hebat! Kamu bisa membaca!</p>
@@ -287,6 +288,20 @@
 
     .speaker-btn:active {
         transform: scale(0.9);
+    }
+
+    .slide-down {
+        animation: slideDown 0.5s ease-out;
+    }
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     @keyframes pulse {

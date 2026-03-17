@@ -191,11 +191,8 @@
     </div>
 
     {#if isLevelDone}
-        <div
-            class="overlay-done flex-col flex-center slide-down"
-            style="z-index: 50;"
-        >
-            <div class="card-done flex-col flex-center">
+        <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
+            <div class="card-done flex-col flex-center slide-down">
                 <h2>Hebat Sekali! 🧠</h2>
                 <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
                 <div class="flex-row gap-sm" style="margin-top:20px;">
@@ -285,6 +282,20 @@
         transform: scale(1.1);
         border-color: #1e88e5;
         box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .slide-down {
+        animation: slideDown 0.5s ease-out;
+    }
+    @keyframes slideDown {
+        from {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
     }
 
     @keyframes shake {
