@@ -215,18 +215,20 @@
     {:else}
         <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
             <div class="finish-screen flex-col flex-center slide-down">
-            <div class="reward-icon">{wordData.icon}</div>
-            <h1 class="success-text">{wordData.word.toUpperCase()}!</h1>
-            <p>Hebat! Kamu bisa membaca!</p>
-            <div class="coin-gain">💰 +5 Ikan Emas</div>
+                <div class="reward-icon">{wordData.icon}</div>
+                <h1 class="success-text">{wordData.word.toUpperCase()}!</h1>
+                <p>Hebat! Kamu bisa membaca!</p>
+                <div class="coin-gain">💰 +5 Ikan Emas</div>
 
-            <div class="action-buttons flex-col gap-sm">
-                <button class="btn btn-primary" onclick={handleNext}
-                    >Lanjut 👉</button
-                >
-                <button class="btn btn-secondary" onclick={() => push("/gate")}
-                    >Kembali ke Menu 🏠</button
-                >
+                <div class="action-buttons flex-col gap-sm">
+                    <button class="btn btn-primary" onclick={handleNext}
+                        >Lanjut 👉</button
+                    >
+                    <button
+                        class="btn btn-secondary"
+                        onclick={() => push("/gate")}>Kembali ke Menu 🏠</button
+                    >
+                </div>
             </div>
         </div>
     {/if}
