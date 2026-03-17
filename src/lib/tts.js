@@ -30,29 +30,40 @@ export const initTTS = () => {
 };
 
 // Fungsi memanggil teks dinamis ("Wah, Budi pintar!")
-export const speak = (text, rate = 0.9, pitch = 1.3) => {
+export const speak = (text, rate = 1.0, pitch = 1.1) => {
     if (!voicesLoaded) {
         initTTS();
-        // Berikan delay kecil jika baru saja init agar browser sempat memuat voice
-        setTimeout(() => {
-            if (voicesLoaded) doSpeak(text, rate, pitch);
-        }, 150);
+        // Coba langsung saja, jika idVoice masih null tetap akan bunyi dengan default browser
+        doSpeak(text, rate, pitch);
         return;
     }
     doSpeak(text, rate, pitch);
 };
 
 const doSpeak = (text, rate, pitch) => {
-    // Hentikan suara yang sedang main untuk mencegah tumpang tindih
+    if (!synth) return;
+
+    // Hentikan dan resume (beberapa browser butuh resume untuk unlock)
     synth.cancel();
+    if (synth.paused) synth.resume();
 
     const utterance = new SpeechSynthesisUtterance(text);
+
+    // Pastikan idVoice sudah siap
+    if (!idVoice) {
+        const _v = synth.getVoices();
+        idVoice = _v.find(v => v.lang === 'id-ID') || _v[0];
+    }
+
     if (idVoice) utterance.voice = idVoice;
 
     utterance.lang = "id-ID";
     utterance.volume = 1;
-    utterance.pitch = 1.1; // Sedikit dinaikkan pitch-nya untuk kesan ramah anak
-    utterance.rate = 1.0; // Kecepatan normal normal kembali
+    utterance.pitch = pitch;
+    utterance.rate = rate;
+
+    // Bug Fix: Di beberapa browser, utterance perlu di-bind ke event agar tidak di-garbage collect
+    utterance.onend = () => { /* end */ };
 
     synth.speak(utterance);
 };
@@ -80,4 +91,11 @@ export const speakEncourage = () => {
     ];
     const random = lines[Math.floor(Math.random() * lines.length)];
     speak(random);
+};
+
+// Fungsi untuk unlock audio di mobile (panggil saat interaksi pertama)
+export const unlockTTS = () => {
+    if (synth && synth.paused) synth.resume();
+    const utterance = new SpeechSynthesisUtterance("");
+    synth.speak(utterance);
 };
