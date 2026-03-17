@@ -4,3 +4,4 @@ dist
 .env
 .localbase
 package-lock.json
+node_modules

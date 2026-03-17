@@ -3,13 +3,18 @@
     import { playSfx } from "../lib/audio.js";
     import { speakPraise } from "../lib/tts.js";
 
-    let { targetLetter = "a", onComplete = () => {} } = $props();
+    let {
+        targetLetter = "a",
+        isLessonMode = false,
+        onComplete = () => {},
+    } = $props();
 
     let canvas;
     let ctx;
     let isDrawing = $state(false);
     let currentRound = $state(1); // 1 = Upper, 2 = Lower
     let isDone = $state(false);
+    let showOverlay = $state(false);
 
     // Ukuran kuas dan warna
     const brushSize = 35; // Perkecil sedikit sesuai request
@@ -94,7 +99,21 @@
     }
 
     function handleNext() {
-        onComplete(3); // Selalu bintang 3 karena tracing itu effort
+        if (currentRound === 1) {
+            currentRound = 2;
+            resetGame();
+            return;
+        }
+
+        if (isLessonMode) {
+            showOverlay = true;
+            return;
+        }
+        onComplete(3);
+    }
+
+    function handleFinish() {
+        onComplete(3);
     }
 </script>
 
@@ -131,13 +150,6 @@
         </button>
     </div>
 
-    <div class="progress-bar-bg mt-md">
-        <div
-            class="progress-fill"
-            style="width: {Math.min(fillPercentage, 100)}%;"
-        ></div>
-    </div>
-
     {#if showOverlay}
         <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
             <div class="card-done flex-col flex-center slide-down">
@@ -147,7 +159,7 @@
                     <button class="btn btn-secondary" onclick={resetGame}
                         >🔁 Ulangi</button
                     >
-                    <button class="btn btn-primary" onclick={handleNext}
+                    <button class="btn btn-primary" onclick={handleFinish}
                         >Lanjut 👉</button
                     >
                 </div>
@@ -184,30 +196,6 @@
         display: block;
         cursor: crosshair;
         touch-action: none; /* Cegah scroll browser saat menggambar */
-    }
-
-    .progress-bar-bg {
-        width: 300px;
-        height: 15px;
-        background: #e0e0e0;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-top: 20px;
-    }
-
-    .round-indicator {
-        background: #8bc34a;
-        color: white;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 0.9rem;
-    }
-
-    .progress-fill {
-        height: 100%;
-        background: #ffca28;
-        transition: width 0.1s linear;
     }
 
     @keyframes popIn {

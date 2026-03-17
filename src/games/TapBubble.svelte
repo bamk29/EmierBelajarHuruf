@@ -3,7 +3,11 @@
     import { playSfx } from "../lib/audio.js";
     import { speak, speakEncourage, speakPraise } from "../lib/tts.js";
 
-    let { targetLetter = "a", onComplete = (stars) => {} } = $props();
+    let {
+        targetLetter = "a",
+        isLessonMode = false,
+        onComplete = (stars) => {},
+    } = $props();
 
     // Opsi huruf salah untuk pengecoh
     const decoys = ["b", "d", "p", "i", "u", "e", "o"]
@@ -21,7 +25,6 @@
     let maxMistakes = 5; // Total salah pencet ATAU kelewatan (missed target)
     let gameInterval;
     let overlayType = $state("none"); // "none", "round", "game", "fail"
-    let isComplete = $state(false); // Untuk ReadingGame
 
     onMount(() => {
         startGame();
@@ -54,8 +57,6 @@
             gameInterval = setInterval(spawnBalloon, spawnRate);
         }
 
-        // Peluang 50% untuk spawn huruf target vs pengecoh
-        // Ronde 1: Besar, Ronde 2: Kecil, Ronde 3: Acak
         let letter;
         const isTarget = Math.random() > 0.4;
 
@@ -76,7 +77,6 @@
                     Math.random() > 0.5 ? dec.toUpperCase() : dec.toLowerCase();
         }
 
-        // Warna acak untuk balon
         const colors = ["#FF7043", "#00BCD4", "#66BB6A", "#FFA726", "#AB47BC"];
         const color = colors[Math.floor(Math.random() * colors.length)];
 
@@ -84,17 +84,15 @@
             id: Math.random().toString(36).substr(2, 9),
             letter: letter,
             isTarget: isTarget,
-            x: 15 + Math.random() * 70, // Posisi X (15% - 85%) supaya tidak nabrak pinggir
-            y: 110, // Mulai dari bawah layar
+            x: 15 + Math.random() * 70,
+            y: 110,
             color: color,
             popped: false,
         };
 
         balloons.push(balloon);
 
-        // Hapus jika sudah di luar layar setelah 6 detik
         setTimeout(() => {
-            // Cek apakah balon target terlewat meletup?
             const b = balloons.find((i) => i.id === balloon.id);
             if (b && !b.popped && b.isTarget) {
                 targetMissed += 1;
@@ -107,7 +105,6 @@
 
     function checkFail() {
         if (mistakes >= maxMistakes && overlayType === "none") {
-            // Batas salah/kelewatan melampaui toleransi -> Gagal Ronde
             clearInterval(gameInterval);
             speakEncourage();
             overlayType = "fail";
@@ -118,48 +115,41 @@
         if (balloon.popped) return;
 
         if (balloon.isTarget) {
-            // Benar!
             playSfx("pop");
             balloon.popped = true;
             score += 1;
-            mistakes = 0; // Reset kesalahan
-            // showHint = false; // This variable is not defined in the provided code.
+            mistakes = 0;
 
             if (score >= targetScore) {
                 clearInterval(gameInterval);
                 speakPraise();
 
-                const isLessonMode = window.location.hash.includes("/lesson");
                 if (isLessonMode && currentRound >= maxRounds) {
                     setTimeout(() => {
                         overlayType = "game";
-                    }, 1000);
+                    }, 500);
                     return;
                 }
 
                 if (isLessonMode) {
                     setTimeout(() => {
                         overlayType = "round";
-                    }, 1000);
+                    }, 500);
                     return;
                 }
 
-                // Infinite: Naikkan ronde secara otomatis tanpa overlay yang memutus game
                 setTimeout(() => {
                     handleNextRound();
-                }, 2000);
+                }, 1500);
             }
         } else {
-            // Salah
             playSfx("bloop");
             balloon.popped = true;
             balloon.wrong = true;
             mistakes += 1;
-
             checkFail();
         }
 
-        // Update array referensi untuk svelte runes
         balloons = [...balloons];
     }
 
@@ -218,7 +208,6 @@
     {/each}
 
     {#if overlayType !== "none"}
-        <!-- Overlay Tombol Lanjut/Ulangi -->
         <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
             <div class="card-done flex-col flex-center slide-down">
                 {#if overlayType === "fail"}
@@ -264,7 +253,7 @@
     .game-container {
         width: 100%;
         height: 100vh;
-        background: linear-gradient(180deg, #81d4fa, #e1f5fe); /* Langit biru */
+        background: linear-gradient(180deg, #81d4fa, #e1f5fe);
         position: absolute;
         top: 0;
         left: 0;
@@ -302,7 +291,7 @@
             0 5px 10px rgba(0, 0, 0, 0.2);
         cursor: pointer;
         touch-action: manipulation;
-        bottom: -100px; /* Start dari bawah */
+        bottom: -100px;
     }
 
     .balloon span {
@@ -321,7 +310,6 @@
     }
 
     .float-up {
-        /* TranslateY dr bawah 120vh ke -20vh selama 6 detik */
         animation: floatUp 6s linear forwards;
     }
 

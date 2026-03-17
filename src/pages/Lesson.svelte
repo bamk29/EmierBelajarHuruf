@@ -197,35 +197,41 @@
             >
         </div>
     {:else if stage === "game1"}
-        <TapBubble
+        <MatchCase
             targetLetter={letterData.letter}
+            isLessonMode={true}
             onComplete={onGame1Complete}
         />
     {:else if stage === "game2"}
+        <Tracing
+            targetLetter={letterData.letter}
+            isLessonMode={true}
+            onComplete={onGame2Complete}
+        />
+    {:else if stage === "game3"}
+        <TapBubble
+            targetLetter={letterData.letter}
+            isLessonMode={true}
+            onComplete={onGame3Complete}
+        />
+    {:else if stage === "game4"}
+        <CatchDrop
+            targetLetter={letterData.letter}
+            isLessonMode={true}
+            onComplete={onGame4Complete}
+        />
+    {:else if stage === "game5"}
         <VisualMatch
             targetLetter={letterData.letter}
             targetWord={currentWord}
             targetIcon={currentIcon}
-            onComplete={onGame2Complete}
-        />
-    {:else if stage === "game3"}
-        <MatchCase
-            targetLetter={letterData.letter}
-            onComplete={onGame3Complete}
-        />
-    {:else if stage === "game4"}
-        <Tracing
-            targetLetter={letterData.letter}
-            onComplete={onGame4Complete}
-        />
-    {:else if stage === "game5"}
-        <CatchDrop
-            targetLetter={letterData.letter}
+            isLessonMode={true}
             onComplete={onGame5Complete}
         />
     {:else if stage === "game6"}
         <WordBuilder
             targetLetter={letterData.letter}
+            isLessonMode={true}
             onComplete={onGame6Complete}
         />
     {:else if stage === "finish"}

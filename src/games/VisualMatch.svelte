@@ -8,6 +8,7 @@
         targetLetter = "a",
         targetWord = "Apel",
         targetIcon = "🍎",
+        isLessonMode = false,
         onComplete = () => {},
     } = $props();
 
@@ -23,9 +24,7 @@
     });
 
     function initGame() {
-        // Cari data huruf target
         const letterData = letters.find((l) => l.letter === targetLetter);
-        // Fallback jika data words tidak ada (misal konsonan belum lengkap)
         const roundWordData =
             letterData && letterData.words && letterData.words[currentRound - 1]
                 ? letterData.words[currentRound - 1]
@@ -34,7 +33,6 @@
         let currentTargetWord = roundWordData.word;
         let currentTargetIcon = roundWordData.icon;
 
-        // Siapkan 3 pilihan (1 Benar dari roundWordData, 2 Salah dari letters lain)
         let ops = [
             {
                 word: currentTargetWord,
@@ -45,7 +43,6 @@
 
         while (ops.length < 3) {
             const dec = letters[Math.floor(Math.random() * letters.length)];
-            // Ambil kata pertama dari decoy
             const decWord = dec.words ? dec.words[0].word : dec.word;
             const decIcon = dec.words ? dec.words[0].icon : dec.icon;
 
@@ -68,12 +65,7 @@
         if (isLevelDone) return;
 
         const letterData = letters.find((l) => l.letter === targetLetter);
-        const roundWordData =
-            letterData && letterData.words && letterData.words[currentRound - 1]
-                ? letterData.words[currentRound - 1]
-                : { word: targetWord };
 
-        // Ucapkan benda saat di-tap
         speak(opt.word);
 
         if (opt.isTarget) {
@@ -81,18 +73,14 @@
             opt.selected = true;
             speakPraise();
 
-            // Tentukan apakah dalam mode Lesson atau Standalone
-            const isLessonMode = window.location.hash.includes("/lesson");
-
-            if (isLessonMode && currentRound >= totalRounds) {
+            if (isLessonMode) {
                 setTimeout(() => {
                     isLevelDone = true;
-                    // speakPraise() sudah dipanggil di atas
-                }, 1500);
+                }, 1000);
                 return;
             }
 
-            // Infinite Mode (jika di luar lesson)
+            // Standalone Mode: Auto-advance
             setTimeout(() => {
                 if (currentRound >= (letterData?.words?.length || 3)) {
                     currentRound = 1;
@@ -116,20 +104,30 @@
     }
 
     function handleNext() {
-        onComplete(mistakes === 0 ? 3 : mistakes <= 1 ? 2 : 1);
+        if (isLessonMode) {
+            // Jika di lesson mode, Ronde ditentukan oleh totalRounds (3)
+            if (currentRound < totalRounds) {
+                currentRound++;
+                isLevelDone = false;
+                initGame();
+            } else {
+                onComplete(mistakes === 0 ? 3 : mistakes <= 1 ? 2 : 1);
+            }
+        } else {
+            // Standalone next
+            onComplete(3);
+        }
     }
 
     function handleRetry() {
-        // Setup reset
         mistakes = 0;
         isLevelDone = false;
         showHint = false;
-        initGame(); // re-initiate
+        initGame();
     }
 </script>
 
 <div class="game-container flex-col flex-center">
-    <!-- Ronde Indicator -->
     <div class="round-badge">Ronde {currentRound} / {totalRounds}</div>
 
     <h2 class="title" style="margin-bottom: 50px;">

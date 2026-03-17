@@ -4,7 +4,11 @@
     import { speak, speakPraise, speakEncourage } from "../lib/tts.js";
     import { letters } from "../data/letters.js";
 
-    let { targetLetter = "a", onComplete = () => {} } = $props();
+    let {
+        targetLetter = "a",
+        isLessonMode = false,
+        onComplete = () => {},
+    } = $props();
 
     let uppercaseBoxes = $state([]);
     let lowercaseBoxes = $state([]);
@@ -92,7 +96,6 @@
             if (matchedCount === targetCount) {
                 speakPraise();
 
-                const isLessonMode = window.location.hash.includes("/lesson");
                 if (isLessonMode) {
                     setTimeout(() => {
                         isLevelDone = true;

@@ -6,7 +6,11 @@
     import { appState } from "../lib/state.svelte.js";
     import { letters } from "../data/letters.js";
 
-    let { targetLetter = $bindable("a"), onComplete = () => {} } = $props();
+    let {
+        targetLetter = $bindable("a"),
+        isLessonMode = false,
+        onComplete = () => {},
+    } = $props();
     let currentLetter = $state("a");
 
     let word = $state("");
@@ -121,10 +125,9 @@
             speakPraise();
 
             // Auto-advance setelah 2.5 detik
-            const isLessonMode = window.location.hash.includes("/lesson");
             if (isLessonMode) {
                 setTimeout(() => {
-                    isComplete = true;
+                    isComplete = true; // Tampilkan overlay di Lesson mode
                 }, 1500);
                 return;
             }
@@ -136,24 +139,12 @@
     }
 
     function handleNext() {
-        const currentHash = window.location.hash;
-        if (currentHash.includes("/word-builder")) {
-            playSfx("pop");
-            // Pilih huruf acak selain yang sekarang agar variatif
-            let nextChar = currentLetter;
-            if (letters.length > 1) {
-                while (nextChar === currentLetter) {
-                    nextChar =
-                        letters[Math.floor(Math.random() * letters.length)]
-                            .letter;
-                }
-            }
-            currentLetter = nextChar;
-            initGame();
+        if (isLessonMode) {
+            onComplete(3);
             return;
         }
-
-        onComplete(3);
+        // Standalone: Lanjut ke kata lain
+        initGame();
     }
 </script>
 
@@ -202,6 +193,30 @@
             </div>
         {/each}
     </div>
+
+    {#if isComplete}
+        <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
+            <div class="card-done flex-col flex-center slide-down">
+                <div style="font-size: 80px; margin-bottom: 10px;">
+                    {icon}
+                </div>
+                <h2
+                    style="color: #FBC02D; font-size: 40px; margin-bottom: 20px;"
+                >
+                    {word}
+                </h2>
+                <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
+                <div class="flex-row gap-sm" style="margin-top:30px;">
+                    <button
+                        class="btn btn-primary"
+                        onclick={handleNext}
+                        style="font-size: 24px; padding: 15px 40px;"
+                        >Lanjut 👉</button
+                    >
+                </div>
+            </div>
+        </div>
+    {/if}
 
     {#if draggedItem}
         <div

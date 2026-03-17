@@ -4,14 +4,19 @@
     import { speak, speakPraise, speakEncourage } from "../lib/tts.js";
     import { letters } from "../data/letters.js";
 
-    let { targetLetter = "a", onComplete = () => {} } = $props();
+    let {
+        targetLetter = "a",
+        isLessonMode = false,
+        onComplete = () => {},
+    } = $props();
 
     let basketPos = $state(50);
     let drops = $state([]);
     let score = $state(0);
     let mistakes = $state(0);
-    let targetScore = 30;
+    let targetScore = 20; // Perkecil sedikit agar tidak terlalu lama
     let isLevelDone = $state(false);
+    let isComplete = $state(false);
 
     let gameActive = false;
     let lastSpawnTime = 0;
@@ -94,9 +99,16 @@
             if (score >= targetScore) {
                 gameActive = false;
                 speakPraise();
+                if (isLessonMode) {
+                    setTimeout(() => {
+                        isComplete = true; // Tampilkan overlay di Lesson mode
+                    }, 1000);
+                    return;
+                }
+                // Standalone: Lanjut
                 setTimeout(() => {
-                    isLevelDone = true;
-                }, 1000);
+                    startGame();
+                }, 2000);
             }
         } else {
             playSfx("bloop");
@@ -155,20 +167,16 @@
         </div>
     </div>
 
-    {#if isLevelDone}
-        <div
-            class="overlay-done flex-col flex-center slide-down"
-            style="z-index: 50;"
-        >
-            <div class="card-done flex-col flex-center">
+    {#if isComplete}
+        <div class="overlay-done flex-col flex-center" style="z-index: 10000;">
+            <div class="card-done flex-col flex-center slide-down">
                 <h2>Tangkapan Bagus! 🪣</h2>
                 <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
                 <div class="flex-row gap-sm" style="margin-top:20px;">
-                    <button
-                        class="btn btn-secondary"
-                        onclick={() => startGame()}>🔁 Ulangi</button
+                    <button class="btn btn-secondary" onclick={startGame}
+                        >🔁 Ulangi</button
                     >
-                    <button class="btn btn-primary" onclick={() => handleNext()}
+                    <button class="btn btn-primary" onclick={handleNext}
                         >Lanjut 👉</button
                     >
                 </div>
