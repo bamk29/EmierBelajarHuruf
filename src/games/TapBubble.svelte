@@ -21,6 +21,7 @@
     let maxMistakes = 5; // Total salah pencet ATAU kelewatan (missed target)
     let gameInterval;
     let overlayType = $state("none"); // "none", "round", "game", "fail"
+    let isComplete = $state(false); // Untuk ReadingGame
 
     onMount(() => {
         startGame();
@@ -128,10 +129,16 @@
                 clearInterval(gameInterval);
                 speakPraise();
 
-                const isLessonMode = window.location.hash.includes("/lesson");
                 if (isLessonMode && currentRound >= maxRounds) {
                     setTimeout(() => {
-                        onComplete(3);
+                        overlayType = "game";
+                    }, 2000);
+                    return;
+                }
+
+                if (isLessonMode) {
+                    setTimeout(() => {
+                        overlayType = "round";
                     }, 2000);
                     return;
                 }

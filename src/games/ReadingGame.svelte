@@ -139,14 +139,15 @@
             const isLessonMode = window.location.hash.includes("/lesson");
             if (isLessonMode) {
                 setTimeout(() => {
-                    onComplete(3);
-                }, 2500);
+                    isComplete = true; // Tampilkan overlay di Lesson mode
+                    speakPraise();
+                }, 2000);
                 return;
             }
 
             setTimeout(() => {
                 speakPraise();
-                // Auto-advance ke kata berikut secara acak
+                // Auto-advance ke kata berikut secara acak di standalone
                 initGame();
             }, 2500);
         }

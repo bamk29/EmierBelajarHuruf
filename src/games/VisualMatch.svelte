@@ -86,7 +86,8 @@
 
             if (isLessonMode && currentRound >= totalRounds) {
                 setTimeout(() => {
-                    onComplete(3);
+                    isLevelDone = true;
+                    // speakPraise() sudah dipanggil di atas
                 }, 1500);
                 return;
             }
@@ -158,7 +159,25 @@
         {/each}
     </div>
 
-    <!-- Overlay done dihapus agar game flow infinite -->
+    {#if isLevelDone}
+        <div
+            class="overlay-done flex-col flex-center slide-down"
+            style="z-index: 50;"
+        >
+            <div class="card-done flex-col flex-center">
+                <h2>Mata Elang! 🦅</h2>
+                <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
+                <div class="flex-row gap-sm" style="margin-top:20px;">
+                    <button class="btn btn-secondary" onclick={handleRetry}
+                        >🔁 Ulangi</button
+                    >
+                    <button class="btn btn-primary" onclick={handleNext}
+                        >Lanjut 👉</button
+                    >
+                </div>
+            </div>
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -241,6 +260,27 @@
     .hinted {
         box-shadow: 0 0 15px #ffca28;
         border-color: #ffca28;
+    }
+
+    .overlay-done {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .card-done {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        text-align: center;
+    }
+    .card-done h2 {
+        color: #e65100;
+        margin-bottom: 5px;
     }
 
     @keyframes shake {

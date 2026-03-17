@@ -113,6 +113,14 @@
             speakPraise();
 
             // Auto-advance setelah 2.5 detik
+            const isLessonMode = window.location.hash.includes("/lesson");
+            if (isLessonMode) {
+                setTimeout(() => {
+                    isComplete = true;
+                }, 1500);
+                return;
+            }
+
             setTimeout(() => {
                 handleNext();
             }, 2500);
@@ -196,7 +204,23 @@
         </div>
     {/if}
 
-    <!-- Overlay done dihapus agar game flow infinite -->
+    {#if isComplete}
+        <div class="overlay-done flex-col flex-center pop-in">
+            <div class="card-done flex-col flex-center">
+                <div style="font-size: 100px; margin-bottom: 20px;">{icon}</div>
+                <h2>Hebat! Kata {word} Selesai! ✨</h2>
+                <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
+                <div class="flex-row gap-sm" style="margin-top:20px;">
+                    <button class="btn btn-secondary" onclick={initGame}
+                        >🔁 Ulangi</button
+                    >
+                    <button class="btn btn-primary" onclick={handleNext}
+                        >Lanjut 👉</button
+                    >
+                </div>
+            </div>
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -325,6 +349,50 @@
         z-index: 10000;
         transform: translate(-50%, -50%);
         box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .overlay-done {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(251, 192, 45, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 11000;
+    }
+
+    .card-done {
+        background: white;
+        padding: 50px;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn {
+        padding: 15px 30px;
+        font-size: 20px;
+        border-radius: 15px;
+        cursor: pointer;
+        border: none;
+        font-weight: bold;
+        transition: transform 0.2s;
+    }
+
+    .btn:active {
+        transform: scale(0.95);
+    }
+
+    .btn-primary {
+        background: #fbc02d;
+        color: white;
+    }
+    .btn-secondary {
+        background: #fff9c4;
+        color: #fbc02d;
     }
 
     .pop-in {
