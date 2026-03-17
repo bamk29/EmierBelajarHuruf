@@ -29,12 +29,20 @@
         }
     });
 
+    let lastWordIndex = -1;
+
     function initGame() {
         const data =
             letters.find((l) => l.letter === currentLetter) || letters[0];
-        // Pilih satu kata acak dari daftar kata milik huruf tersebut
-        const randomWordData =
-            data.words[Math.floor(Math.random() * data.words.length)];
+
+        let wordIndex = Math.floor(Math.random() * data.words.length);
+        // Jika kata yang dipilih sama dengan kata sebelumnya dan ada lebih dari 1 kata, cari index lain
+        if (data.words.length > 1 && wordIndex === lastWordIndex) {
+            wordIndex = (wordIndex + 1) % data.words.length;
+        }
+        lastWordIndex = wordIndex;
+
+        const randomWordData = data.words[wordIndex];
         word = randomWordData.word.toUpperCase();
         icon = randomWordData.icon;
 
