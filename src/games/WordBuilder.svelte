@@ -226,24 +226,6 @@
             {draggedItem.char}
         </div>
     {/if}
-
-    {#if isComplete}
-        <div class="overlay-done flex-col flex-center pop-in">
-            <div class="card-done flex-col flex-center">
-                <div style="font-size: 100px; margin-bottom: 20px;">{icon}</div>
-                <h2>Hebat! Kata {word} Selesai! ✨</h2>
-                <div style="font-size: 50px; margin: 10px 0;">⭐⭐⭐</div>
-                <div class="flex-row gap-sm" style="margin-top:20px;">
-                    <button class="btn btn-secondary" onclick={initGame}
-                        >🔁 Ulangi</button
-                    >
-                    <button class="btn btn-primary" onclick={handleNext}
-                        >Lanjut 👉</button
-                    >
-                </div>
-            </div>
-        </div>
-    {/if}
 </div>
 
 <style>
@@ -257,10 +239,13 @@
     }
 
     .exit-btn {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        z-index: 100;
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        z-index: 500;
+        padding: 10px 20px;
+        font-size: 16px;
+        opacity: 0.9;
     }
 
     .image-card {
@@ -269,7 +254,8 @@
         border-radius: 30px;
         box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         text-align: center;
-        margin-bottom: 40px;
+        margin-top: 60px; /* Beri ruang untuk exit button */
+        margin-bottom: 30px;
     }
 
     .icon {
