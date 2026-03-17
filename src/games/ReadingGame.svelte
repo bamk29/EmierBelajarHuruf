@@ -6,12 +6,21 @@
     import { appState } from "../lib/state.svelte.js";
     import { letters } from "../data/letters.js";
 
+    let { onComplete = () => {} } = $props();
     let wordData = $state(null);
     let syllables = $state([]); // { text: 'BO', id: 0, matched: false }
     let options = $state([]); // { text: 'BO', id: 0 }
     let draggedItem = $state(null);
     let dragPos = $state({ x: 0, y: 0 });
     let isComplete = $state(false);
+
+    function handleNext() {
+        onComplete(3);
+        // Jika di standalone, lanjut kata lain
+        if (!window.location.hash.includes("/lesson")) {
+            initGame();
+        }
+    }
 
     // Daftar kata & kalimat untuk game belajar membaca
     const readingWords = [
@@ -211,8 +220,8 @@
             <div class="coin-gain">💰 +5 Ikan Emas</div>
 
             <div class="action-buttons flex-col gap-sm">
-                <button class="btn btn-primary" onclick={initGame}
-                    >Lanjut Kata Lain ⏭️</button
+                <button class="btn btn-primary" onclick={handleNext}
+                    >Lanjut 👉</button
                 >
                 <button class="btn btn-secondary" onclick={() => push("/gate")}
                     >Kembali ke Menu 🏠</button

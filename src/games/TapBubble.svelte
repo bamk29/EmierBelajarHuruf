@@ -129,6 +129,7 @@
                 clearInterval(gameInterval);
                 speakPraise();
 
+                const isLessonMode = window.location.hash.includes("/lesson");
                 if (isLessonMode && currentRound >= maxRounds) {
                     setTimeout(() => {
                         overlayType = "game";

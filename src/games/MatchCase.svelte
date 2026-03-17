@@ -95,7 +95,7 @@
                 const isLessonMode = window.location.hash.includes("/lesson");
                 if (isLessonMode) {
                     setTimeout(() => {
-                        onComplete(3);
+                        isLevelDone = true;
                     }, 1500);
                     return;
                 }
